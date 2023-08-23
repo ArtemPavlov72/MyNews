@@ -11,6 +11,15 @@
 		AC74A44E2A94C60E000A9112 /* NewsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC74A44D2A94C60E000A9112 /* NewsListViewController.swift */; };
 		AC74A4532A94C610000A9112 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC74A4522A94C610000A9112 /* Assets.xcassets */; };
 		AC74A4562A94C610000A9112 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC74A4542A94C610000A9112 /* LaunchScreen.storyboard */; };
+		AC74A4612A94CD08000A9112 /* FavoriteNewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC74A4602A94CD08000A9112 /* FavoriteNewsViewController.swift */; };
+		AC74A4642A94CDA0000A9112 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC74A4632A94CDA0000A9112 /* TabBarViewController.swift */; };
+		AC74A4662A94CDBC000A9112 /* TabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC74A4652A94CDBC000A9112 /* TabBarViewModel.swift */; };
+		AC74A4692A94CE30000A9112 /* NewListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC74A4682A94CE30000A9112 /* NewListViewModel.swift */; };
+		AC74A46C2A94CE50000A9112 /* FavoriteNewsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC74A46B2A94CE50000A9112 /* FavoriteNewsViewModel.swift */; };
+		AC74A46F2A94D062000A9112 /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC74A46E2A94D062000A9112 /* Box.swift */; };
+		AC74A4722A94D1F4000A9112 /* NewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC74A4712A94D1F4000A9112 /* NewsCell.swift */; };
+		AC74A4742A94D240000A9112 /* NewsCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC74A4732A94D240000A9112 /* NewsCellViewModel.swift */; };
+		AC74A4772A94D36E000A9112 /* UICollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC74A4762A94D36E000A9112 /* UICollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +29,15 @@
 		AC74A4522A94C610000A9112 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AC74A4552A94C610000A9112 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AC74A4572A94C610000A9112 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AC74A4602A94CD08000A9112 /* FavoriteNewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteNewsViewController.swift; sourceTree = "<group>"; };
+		AC74A4632A94CDA0000A9112 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
+		AC74A4652A94CDBC000A9112 /* TabBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewModel.swift; sourceTree = "<group>"; };
+		AC74A4682A94CE30000A9112 /* NewListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewListViewModel.swift; sourceTree = "<group>"; };
+		AC74A46B2A94CE50000A9112 /* FavoriteNewsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteNewsViewModel.swift; sourceTree = "<group>"; };
+		AC74A46E2A94D062000A9112 /* Box.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
+		AC74A4712A94D1F4000A9112 /* NewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCell.swift; sourceTree = "<group>"; };
+		AC74A4732A94D240000A9112 /* NewsCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCellViewModel.swift; sourceTree = "<group>"; };
+		AC74A4762A94D36E000A9112 /* UICollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,7 +70,9 @@
 		AC74A4482A94C60E000A9112 /* MyNews */ = {
 			isa = PBXGroup;
 			children = (
+				AC74A46D2A94D052000A9112 /* Helpers */,
 				AC74A45E2A94CA15000A9112 /* ViewControllers + ViewModels */,
+				AC74A4752A94D34D000A9112 /* Extensions */,
 				AC74A45D2A94CA03000A9112 /* App */,
 				AC74A45F2A94CA1C000A9112 /* Resources */,
 			);
@@ -72,7 +92,10 @@
 		AC74A45E2A94CA15000A9112 /* ViewControllers + ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				AC74A44D2A94C60E000A9112 /* NewsListViewController.swift */,
+				AC74A4702A94D1D5000A9112 /* NewsCell */,
+				AC74A4672A94CE16000A9112 /* NewListView */,
+				AC74A46A2A94CE46000A9112 /* FavoriteNewsView */,
+				AC74A4622A94CD5A000A9112 /* TabBarView */,
 			);
 			path = "ViewControllers + ViewModels";
 			sourceTree = "<group>";
@@ -83,6 +106,58 @@
 				AC74A4522A94C610000A9112 /* Assets.xcassets */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		AC74A4622A94CD5A000A9112 /* TabBarView */ = {
+			isa = PBXGroup;
+			children = (
+				AC74A4632A94CDA0000A9112 /* TabBarViewController.swift */,
+				AC74A4652A94CDBC000A9112 /* TabBarViewModel.swift */,
+			);
+			path = TabBarView;
+			sourceTree = "<group>";
+		};
+		AC74A4672A94CE16000A9112 /* NewListView */ = {
+			isa = PBXGroup;
+			children = (
+				AC74A44D2A94C60E000A9112 /* NewsListViewController.swift */,
+				AC74A4682A94CE30000A9112 /* NewListViewModel.swift */,
+			);
+			path = NewListView;
+			sourceTree = "<group>";
+		};
+		AC74A46A2A94CE46000A9112 /* FavoriteNewsView */ = {
+			isa = PBXGroup;
+			children = (
+				AC74A4602A94CD08000A9112 /* FavoriteNewsViewController.swift */,
+				AC74A46B2A94CE50000A9112 /* FavoriteNewsViewModel.swift */,
+			);
+			path = FavoriteNewsView;
+			sourceTree = "<group>";
+		};
+		AC74A46D2A94D052000A9112 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				AC74A46E2A94D062000A9112 /* Box.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		AC74A4702A94D1D5000A9112 /* NewsCell */ = {
+			isa = PBXGroup;
+			children = (
+				AC74A4712A94D1F4000A9112 /* NewsCell.swift */,
+				AC74A4732A94D240000A9112 /* NewsCellViewModel.swift */,
+			);
+			path = NewsCell;
+			sourceTree = "<group>";
+		};
+		AC74A4752A94D34D000A9112 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				AC74A4762A94D36E000A9112 /* UICollectionViewCell.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -155,8 +230,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC74A4662A94CDBC000A9112 /* TabBarViewModel.swift in Sources */,
+				AC74A4722A94D1F4000A9112 /* NewsCell.swift in Sources */,
+				AC74A4692A94CE30000A9112 /* NewListViewModel.swift in Sources */,
+				AC74A4642A94CDA0000A9112 /* TabBarViewController.swift in Sources */,
+				AC74A46C2A94CE50000A9112 /* FavoriteNewsViewModel.swift in Sources */,
+				AC74A4612A94CD08000A9112 /* FavoriteNewsViewController.swift in Sources */,
+				AC74A4772A94D36E000A9112 /* UICollectionViewCell.swift in Sources */,
+				AC74A46F2A94D062000A9112 /* Box.swift in Sources */,
 				AC74A44E2A94C60E000A9112 /* NewsListViewController.swift in Sources */,
 				AC74A44A2A94C60E000A9112 /* AppDelegate.swift in Sources */,
+				AC74A4742A94D240000A9112 /* NewsCellViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
