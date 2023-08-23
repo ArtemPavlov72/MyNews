@@ -68,12 +68,7 @@ class FavoriteNewsViewController: UICollectionViewController {
     }
     cell.viewModel = viewModel?.cellViewModel(at: indexPath)
 
-    //          if indexPath.item == viewModel.numberOfRows() - 2 {
-    //              viewModel.fetchPexelsData() { [weak self] in
-    //                  self?.collectionView.reloadData()
-    //              }
-    //
-    //      }
+
     return cell
   }
 
@@ -122,8 +117,6 @@ extension FavoriteNewsViewController: UICollectionViewDelegateFlowLayout {
 
 private extension FavoriteNewsViewController {
   struct Appearance {
-//    let navigationBarTitle = "Characters"
-    let backGroundColor: UIColor = .blue
     let leftInsert: CGFloat = 20
     let rightInsert: CGFloat = 20
     let topInsert: CGFloat = 20

@@ -123,8 +123,6 @@ extension NewsListViewController: UICollectionViewDelegateFlowLayout {
 
 private extension NewsListViewController {
   struct Appearance {
-//    let navigationBarTitle = "Characters"
-    let backGroundColor: UIColor = .blue
     let leftInsert: CGFloat = 20
     let rightInsert: CGFloat = 20
     let topInsert: CGFloat = 20
@@ -134,6 +132,3 @@ private extension NewsListViewController {
     let minimumInterItemSpacing: CGFloat = 20
   }
 }
-
-
-
