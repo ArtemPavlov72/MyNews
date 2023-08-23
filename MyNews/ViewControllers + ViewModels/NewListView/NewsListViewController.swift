@@ -11,20 +11,17 @@ class NewsListViewController: UICollectionViewController {
 
   //MARK: - Public Properties
 
-  var viewModel: NewsListViewModelProtocol? {
-    didSet {
-
-    }
-  }
+  var viewModel: NewsListViewModelProtocol?
 
   //MARK: - Private Properties
+
   private let cellID = "cell"
   private var activityIndicator: UIActivityIndicatorView?
 
   override func viewDidLoad() {
     super.viewDidLoad()
     collectionView.register(NewsCell.self, forCellWithReuseIdentifier: cellID)
-    view.backgroundColor = .blue
+    loadFirstData()
   }
 
   override func viewDidAppear(_ animated: Bool) {
@@ -33,7 +30,7 @@ class NewsListViewController: UICollectionViewController {
   }
 
   //MARK: - Private Methods
-  //может убрать логику в дидсет вьюмодели?
+
   private func loadFirstData() {
     activityIndicator = showSpinner(in: view)
     viewModel?.fetchNewsData() { [weak self] in
@@ -66,18 +63,21 @@ class NewsListViewController: UICollectionViewController {
     ) as? NewsCell else {
       return NewsCell()
     }
-
     cell.viewModel = viewModel?.cellViewModel(at: indexPath)
-
-    //          if indexPath.item == viewModel.numberOfRows() - 2 {
-    //              viewModel.fetchPexelsData() { [weak self] in
-    //                  self?.collectionView.reloadData()
-    //              }
-    //
-    //      }
     return cell
   }
 
+  // MARK: - UICollectionViewDelegate
+
+  override func collectionView(_ collectionView: UICollectionView,
+                               willDisplay cell: UICollectionViewCell,
+                               forItemAt indexPath: IndexPath) {
+    if indexPath.item == (viewModel?.numberOfRows() ?? 0) - 5 {
+      viewModel?.fetchNewsData() { [weak self] in
+        self?.collectionView.reloadData()
+      }
+    }
+  }
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
@@ -90,7 +90,7 @@ extension NewsListViewController: UICollectionViewDelegateFlowLayout {
     let paddingWidth = 20 * (appearance.numberOfItemsPerRow + 1)
     let avaibleWidth = collectionView.frame.width - paddingWidth
     let widthPerItem = avaibleWidth / appearance.numberOfItemsPerRow
-    let heightPerItem = widthPerItem * 0.5
+    let heightPerItem = widthPerItem * 0.7
     return CGSize(width: widthPerItem, height: heightPerItem)
   }
 

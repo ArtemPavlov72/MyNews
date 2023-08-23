@@ -15,8 +15,13 @@ protocol FavoriteNewsViewModelProtocol {
 
 class FavoriteNewsViewModel: FavoriteNewsViewModelProtocol {
 
+  //MARK: - Private Properties
+
+  private var newsData: News?
+  private var listOfNews: [News.ResultOfNews] = []
+
   func cellViewModel(at indexPath: IndexPath) -> NewsCellViewModelProtocol {
-    return NewsCellViewModel()
+    NewsCellViewModel(news: getNews(at: indexPath))
   }
 
   func numberOfRows() -> Int {
@@ -25,5 +30,11 @@ class FavoriteNewsViewModel: FavoriteNewsViewModelProtocol {
 
   func fetchNewsData(completion: @escaping () -> Void) {
     completion()
+  }
+
+  //MARK: - Private Methods
+
+  private func getNews(at indexPath: IndexPath) -> News.ResultOfNews {
+    listOfNews[indexPath.item]
   }
 }

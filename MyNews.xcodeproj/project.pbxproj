@@ -10,6 +10,7 @@
 		AC41DD372A95E4E700993C46 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC41DD362A95E4E700993C46 /* NetworkManager.swift */; };
 		AC41DD392A95E52A00993C46 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC41DD382A95E52A00993C46 /* ImageManager.swift */; };
 		AC41DD3B2A95E59F00993C46 /* ImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC41DD3A2A95E59F00993C46 /* ImageView.swift */; };
+		AC41DD3F2A95FD2C00993C46 /* News.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC41DD3E2A95FD2C00993C46 /* News.swift */; };
 		AC74A44A2A94C60E000A9112 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC74A4492A94C60E000A9112 /* AppDelegate.swift */; };
 		AC74A44E2A94C60E000A9112 /* NewsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC74A44D2A94C60E000A9112 /* NewsListViewController.swift */; };
 		AC74A4532A94C610000A9112 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC74A4522A94C610000A9112 /* Assets.xcassets */; };
@@ -29,6 +30,7 @@
 		AC41DD362A95E4E700993C46 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		AC41DD382A95E52A00993C46 /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
 		AC41DD3A2A95E59F00993C46 /* ImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageView.swift; sourceTree = "<group>"; };
+		AC41DD3E2A95FD2C00993C46 /* News.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = News.swift; sourceTree = "<group>"; };
 		AC74A4462A94C60E000A9112 /* MyNews.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyNews.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC74A4492A94C60E000A9112 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AC74A44D2A94C60E000A9112 /* NewsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsListViewController.swift; sourceTree = "<group>"; };
@@ -74,6 +76,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		AC41DD3D2A95FD1B00993C46 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				AC41DD3E2A95FD2C00993C46 /* News.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		AC74A43D2A94C60E000A9112 = {
 			isa = PBXGroup;
 			children = (
@@ -95,6 +105,7 @@
 			children = (
 				AC74A46D2A94D052000A9112 /* Helpers */,
 				AC74A45E2A94CA15000A9112 /* ViewControllers + ViewModels */,
+				AC41DD3D2A95FD1B00993C46 /* Models */,
 				AC41DD3C2A95E5F400993C46 /* Views */,
 				AC74A4752A94D34D000A9112 /* Extensions */,
 				AC41DD352A95E4D000993C46 /* Services */,
@@ -258,6 +269,7 @@
 				AC41DD372A95E4E700993C46 /* NetworkManager.swift in Sources */,
 				AC74A4662A94CDBC000A9112 /* TabBarViewModel.swift in Sources */,
 				AC74A4722A94D1F4000A9112 /* NewsCell.swift in Sources */,
+				AC41DD3F2A95FD2C00993C46 /* News.swift in Sources */,
 				AC74A4692A94CE30000A9112 /* NewListViewModel.swift in Sources */,
 				AC74A4642A94CDA0000A9112 /* TabBarViewController.swift in Sources */,
 				AC74A46C2A94CE50000A9112 /* FavoriteNewsViewModel.swift in Sources */,

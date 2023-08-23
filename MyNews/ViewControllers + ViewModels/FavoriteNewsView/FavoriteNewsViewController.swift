@@ -89,7 +89,7 @@ extension FavoriteNewsViewController: UICollectionViewDelegateFlowLayout {
     let paddingWidth = 20 * (appearance.numberOfItemsPerRow + 1)
     let avaibleWidth = collectionView.frame.width - paddingWidth
     let widthPerItem = avaibleWidth / appearance.numberOfItemsPerRow
-    let heightPerItem = widthPerItem * 0.5
+    let heightPerItem = widthPerItem * 0.7
     return CGSize(width: widthPerItem, height: heightPerItem)
   }
 

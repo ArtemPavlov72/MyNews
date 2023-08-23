@@ -8,26 +8,49 @@
 import Foundation
 
 protocol NewsCellViewModelProtocol {
-    var newsCellName: String? { get }
-//    init(
-//        photo: Photo?
-//    )
+  var newsName: String? { get }
+  var newsDate: String? { get }
+  var newsAuthor: String? { get }
+  var newsDescription: String? { get }
+  var newsImage: String? { get }
+  init(
+    news: News.ResultOfNews?
+  )
 }
 
 class NewsCellViewModel: NewsCellViewModelProtocol {
 
+  // MARK: - Public Properties
 
-    //MARK: - Public Properties
-  var newsCellName: String?
+  var newsName: String? {
+    news?.title
+  }
 
-    //MARK: - Private Properties
-//    private var news: News?
+  var newsDate: String? {
+    news?.pubDate
+  }
 
+  var newsAuthor: String? {
+    news?.creator?.first
+  }
 
-    //MARK: - Init
-//    required init(
-//        news: News?,
-//    ) {
-//        self.news = news
-//    }
+  var newsDescription: String? {
+    news?.description
+  }
+
+  var newsImage: String? {
+    news?.imageUrl
+  }
+
+  // MARK: - Private Properties
+
+  private var news: News.ResultOfNews?
+
+  // MARK: - Init
+
+  required init(
+    news: News.ResultOfNews?
+  ) {
+    self.news = news
+  }
 }

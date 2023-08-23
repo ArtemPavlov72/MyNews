@@ -17,7 +17,7 @@ class ImageView: UIImageView {
 
   func fetchImage(from url: String) {
     guard let url = URL(string: url) else {
-      image = UIImage(named: "no_image")
+      image = UIImage(systemName: "nosign")
       return
     }
 
