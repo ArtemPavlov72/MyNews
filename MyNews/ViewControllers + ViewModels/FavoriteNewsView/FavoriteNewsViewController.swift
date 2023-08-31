@@ -11,20 +11,16 @@ class FavoriteNewsViewController: UICollectionViewController {
 
   //MARK: - Public Properties
 
-  var viewModel: FavoriteNewsViewModelProtocol? {
-    didSet {
-
-    }
-  }
+  var viewModel: FavoriteNewsViewModelProtocol?
 
   //MARK: - Private Properties
+
   private let cellID = "cell"
   private var activityIndicator: UIActivityIndicatorView?
 
   override func viewDidLoad() {
     super.viewDidLoad()
     collectionView.register(NewsCell.self, forCellWithReuseIdentifier: cellID)
-    view.backgroundColor = .blue
   }
 
   override func viewDidAppear(_ animated: Bool) {
@@ -33,14 +29,6 @@ class FavoriteNewsViewController: UICollectionViewController {
   }
 
   //MARK: - Private Methods
-  //может убрать логику в дидсет вьюмодели?
-  private func loadFirstData() {
-    activityIndicator = showSpinner(in: view)
-    viewModel?.fetchNewsData() { [weak self] in
-      self?.activityIndicator?.stopAnimating()
-      self?.collectionView.reloadData()
-    }
-  }
 
   private func showSpinner(in view: UIView) -> UIActivityIndicatorView {
     let activityIndicator = UIActivityIndicatorView(frame: view.bounds)
@@ -67,11 +55,16 @@ class FavoriteNewsViewController: UICollectionViewController {
       return NewsCell()
     }
     cell.viewModel = viewModel?.cellViewModel(at: indexPath)
-
-
     return cell
   }
 
+  // MARK: - UICollectionViewDelegate
+
+  override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    let detailVC = NewsDetailsViewController()
+    detailVC.viewModel = viewModel?.detailsViewModel(at: indexPath) as? NewsDetailsViewModel
+    show(detailVC, sender: nil)
+  }
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout

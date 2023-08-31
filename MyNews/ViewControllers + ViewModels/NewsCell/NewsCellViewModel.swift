@@ -14,7 +14,8 @@ protocol NewsCellViewModelProtocol {
   var newsDescription: String? { get }
   var newsImage: String? { get }
   init(
-    news: News.ResultOfNews?
+    news: News.ResultOfNews?,
+    favoriteNews: FavoriteNews?
   )
 }
 
@@ -23,34 +24,52 @@ class NewsCellViewModel: NewsCellViewModelProtocol {
   // MARK: - Public Properties
 
   var newsName: String? {
-    news?.title
+    let name = news != nil
+    ? news?.title
+    : favoriteNews?.title
+    return name
   }
 
   var newsDate: String? {
-    news?.pubDate
+    let date = news != nil
+    ? news?.pubDate
+    : favoriteNews?.pubDate
+    return date
   }
 
   var newsAuthor: String? {
-    news?.creator?.first
+    let creator = news != nil
+    ? news?.creator?.first
+    : favoriteNews?.creator
+    return creator
   }
 
   var newsDescription: String? {
-    news?.description
+    let description = news != nil
+    ? news?.description
+    : favoriteNews?.descript
+    return description
   }
 
   var newsImage: String? {
-    news?.imageUrl
+    let image = news != nil
+    ? news?.imageUrl
+    : favoriteNews?.imageUrl
+    return image
   }
 
   // MARK: - Private Properties
 
   private var news: News.ResultOfNews?
+  private var favoriteNews: FavoriteNews?
 
   // MARK: - Init
 
   required init(
-    news: News.ResultOfNews?
+    news: News.ResultOfNews?,
+    favoriteNews: FavoriteNews?
   ) {
     self.news = news
+    self.favoriteNews = favoriteNews
   }
 }

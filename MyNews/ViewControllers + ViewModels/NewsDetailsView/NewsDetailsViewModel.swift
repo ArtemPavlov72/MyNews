@@ -16,6 +16,7 @@ protocol NewsDetailsViewModelProtocol {
   var newsLink: NSURL { get }
   init(news: News.ResultOfNews?, favoriteNews: FavoriteNews?)
   func favoriteButtonPressed()
+  func checkFavoriteNewsForRemove()
 }
 
 class NewsDetailsViewModel: NewsDetailsViewModelProtocol {
@@ -63,6 +64,7 @@ class NewsDetailsViewModel: NewsDetailsViewModelProtocol {
 
   private var news: News.ResultOfNews?
   private var favoriteNews: FavoriteNews?
+  private var deleteFavoriteNews: Bool = false
   private var listOfFavoriteNews: [FavoriteNews] = []
 
   //MARK: - Init
@@ -78,7 +80,7 @@ class NewsDetailsViewModel: NewsDetailsViewModelProtocol {
   func favoriteButtonPressed() {
     if isFavorte.value {
       if favoriteNews != nil {
-        StorageManager.shared.delete(favoriteNews: favoriteNews)
+        deleteFavoriteNews = true
         isFavorte.value = false
       } else {
         guard let news = news else { return }
@@ -87,13 +89,19 @@ class NewsDetailsViewModel: NewsDetailsViewModelProtocol {
       }
     } else {
       if favoriteNews != nil {
-        StorageManager.shared.save(favoriteNews: favoriteNews)
+        deleteFavoriteNews = false
         isFavorte.value = true
       } else {
         guard let news = news else { return }
         StorageManager.shared.save(news: news)
         isFavorte.value = true
       }
+    }
+  }
+
+  func checkFavoriteNewsForRemove() {
+    if deleteFavoriteNews {
+      StorageManager.shared.delete(favoriteNews: favoriteNews)
     }
   }
 
@@ -108,8 +116,6 @@ class NewsDetailsViewModel: NewsDetailsViewModelProtocol {
       loadListOfFavoriteNews()
       guard let newsId = news?.articleId else { return liked }
       _ = listOfFavoriteNews.map { favoriteNews in
-        print("neew \(newsId)")
-        print("neewFavotiteeee \(favoriteNews.articleId)")
         if newsId == favoriteNews.articleId {
           liked.toggle()
         }

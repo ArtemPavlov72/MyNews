@@ -16,11 +16,6 @@ protocol NewsListViewModelProtocol {
 
 class NewsListViewModel: NewsListViewModelProtocol {
 
-  func detailsViewModel(at indexPath: IndexPath) -> NewsDetailsViewModelProtocol {
-    NewsDetailsViewModel(news: getNews(at: indexPath), favoriteNews: nil)
-  }
-
-
   //MARK: - Private Properties
 
   private var newsData: News?
@@ -29,7 +24,11 @@ class NewsListViewModel: NewsListViewModelProtocol {
   //MARK: - Public Methods
 
   func cellViewModel(at indexPath: IndexPath) -> NewsCellViewModelProtocol {
-    NewsCellViewModel(news: getNews(at: indexPath))
+    NewsCellViewModel(news: getNews(at: indexPath), favoriteNews: nil)
+  }
+
+  func detailsViewModel(at indexPath: IndexPath) -> NewsDetailsViewModelProtocol {
+    NewsDetailsViewModel(news: getNews(at: indexPath), favoriteNews: nil)
   }
 
   func numberOfRows() -> Int {

@@ -110,6 +110,11 @@ class NewsDetailsViewController: UIViewController {
     setupConstraints()
   }
 
+
+  override func viewDidDisappear(_ animated: Bool) {
+    super.viewDidDisappear(animated)
+    viewModel?.checkFavoriteNewsForRemove()
+  }
   //MARK: - Private Methods
 
   private func setupUI() {
