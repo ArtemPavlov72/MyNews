@@ -28,7 +28,7 @@ class StorageManager {
     viewContext = persistentContainer.viewContext
   }
 
-  func fetchFavoritePhotos(completion: (Result<[FavoriteNews], Error>) -> Void) {
+  func fetchFavoriteNews(completion: (Result<[FavoriteNews], Error>) -> Void) {
     let fetchRequest = FavoriteNews.fetchRequest()
     do {
       let news = try viewContext.fetch(fetchRequest)
@@ -66,6 +66,23 @@ class StorageManager {
     guard let news = favoriteNews else { return }
     viewContext.delete(news)
     saveContext()
+  }
+
+  func delete(news: News.ResultOfNews) {
+    var favoriteNews: [FavoriteNews] = []
+    fetchFavoriteNews { result in
+      switch result {
+      case .success(let news):
+        favoriteNews = news
+      case .failure(let error):
+        print(error.localizedDescription)
+      }
+    }
+    guard let newsId = news.articleId else { return }
+    _ = favoriteNews.map { favoriteNews in
+      guard newsId == favoriteNews.articleId else { return }
+      delete(favoriteNews: favoriteNews)
+    }
   }
 
   // MARK: - Core Data Saving support

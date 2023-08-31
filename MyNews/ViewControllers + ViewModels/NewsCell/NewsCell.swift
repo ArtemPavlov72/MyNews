@@ -45,7 +45,7 @@ class NewsCell: UICollectionViewCell {
   private lazy var dateLabel: UILabel = {
     let label = UILabel()
     label.font = UIFontMetrics.default.scaledFont(for: UIFont.systemFont(ofSize: 15, weight: .light))
-    label.textColor = .systemGray4
+    label.textColor = .gray
     return label
   }()
 

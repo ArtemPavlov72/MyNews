@@ -11,9 +11,15 @@ protocol NewsListViewModelProtocol {
   func numberOfRows() -> Int
   func fetchNewsData(_ completion: @escaping() -> Void)
   func cellViewModel(at indexPath: IndexPath) -> NewsCellViewModelProtocol
+  func detailsViewModel(at indexPath: IndexPath) -> NewsDetailsViewModelProtocol
 }
 
 class NewsListViewModel: NewsListViewModelProtocol {
+
+  func detailsViewModel(at indexPath: IndexPath) -> NewsDetailsViewModelProtocol {
+    NewsDetailsViewModel(news: getNews(at: indexPath), favoriteNews: nil)
+  }
+
 
   //MARK: - Private Properties
 

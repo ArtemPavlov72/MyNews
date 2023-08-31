@@ -12,6 +12,7 @@ struct News: Decodable {
   let nextPage: Int?
 
   struct ResultOfNews: Decodable {
+    let articleId: String?
     let title: String?
     let link: String?
     let creator: [String]?

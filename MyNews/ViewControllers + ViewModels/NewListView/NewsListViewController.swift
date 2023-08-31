@@ -78,6 +78,12 @@ class NewsListViewController: UICollectionViewController {
       }
     }
   }
+
+  override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    let detailVC = NewsDetailsViewController()
+    detailVC.viewModel = viewModel?.detailsViewModel(at: indexPath) as? NewsDetailsViewModel
+    show(detailVC, sender: nil)
+  }
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
