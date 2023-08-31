@@ -38,20 +38,21 @@ class StorageManager {
     }
   }
 
-  func deleteFavoritePhotos() {
-    let fetchRequest: NSFetchRequest<NSFetchRequestResult> = FavoriteNews.fetchRequest()
-    let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-    do {
-      try viewContext.execute(deleteRequest)
-    } catch let error {
-      print(error)
-    }
-  }
+//  func deleteListOfFavoriteNews() {
+//    let fetchRequest: NSFetchRequest<NSFetchRequestResult> = FavoriteNews.fetchRequest()
+//    let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+//    do {
+//      try viewContext.execute(deleteRequest)
+//    } catch let error {
+//      print(error)
+//    }
+//  }
 
   //MARK: - Private Methods
 
   func save(news: News.ResultOfNews) {
     let favoriteNews = FavoriteNews(context: viewContext)
+    favoriteNews.articleId = news.articleId
     favoriteNews.content = news.content
     favoriteNews.creator = news.creator?.first
     favoriteNews.descript = news.description
@@ -59,6 +60,19 @@ class StorageManager {
     favoriteNews.link = news.link
     favoriteNews.pubDate = news.pubDate
     favoriteNews.title = news.title
+    saveContext()
+  }
+
+  func save(favoriteNews: FavoriteNews?) {
+    let favoriteNews = FavoriteNews(context: viewContext)
+    favoriteNews.articleId = favoriteNews.articleId
+    favoriteNews.content = favoriteNews.content
+    favoriteNews.creator = favoriteNews.creator
+    favoriteNews.descript = favoriteNews.description
+    favoriteNews.imageUrl = favoriteNews.imageUrl
+    favoriteNews.link = favoriteNews.link
+    favoriteNews.pubDate = favoriteNews.pubDate
+    favoriteNews.title = favoriteNews.title
     saveContext()
   }
 

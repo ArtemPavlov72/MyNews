@@ -14,7 +14,7 @@ protocol NewsDetailsViewModelProtocol {
   var imageURL: String? { get }
   var isFavorte: Box<Bool> { get }
   var newsLink: NSURL { get }
-  init(news: News.ResultOfNews, favoriteNews: FavoriteNews?)
+  init(news: News.ResultOfNews?, favoriteNews: FavoriteNews?)
   func favoriteButtonPressed()
 }
 
@@ -63,74 +63,69 @@ class NewsDetailsViewModel: NewsDetailsViewModelProtocol {
 
   private var news: News.ResultOfNews?
   private var favoriteNews: FavoriteNews?
-  private var favoriteListOfNews: [FavoriteNews] = []
-
+  private var listOfFavoriteNews: [FavoriteNews] = []
 
   //MARK: - Init
 
-  required init(news: News.ResultOfNews, favoriteNews: FavoriteNews?) {
+  required init(news: News.ResultOfNews?, favoriteNews: FavoriteNews?) {
     self.news = news
     self.favoriteNews = favoriteNews
     self.isFavorte = Box(setStatus())
   }
 
   //MARK: - Public Methods
+
   func favoriteButtonPressed() {
-    guard let news = news else { return }
-    if !isFavorte.value {
-      _ = favoriteListOfNews.map { favoriteNews in
-        guard news.articleId != favoriteNews.articleId else {return}
+    if isFavorte.value {
+      if favoriteNews != nil {
+        StorageManager.shared.delete(favoriteNews: favoriteNews)
+        isFavorte.value = false
+      } else {
+        guard let news = news else { return }
+        StorageManager.shared.delete(news: news)
+        isFavorte.value = false
       }
-      StorageManager.shared.save(news: news)
-      isFavorte.value = true
     } else {
-      StorageManager.shared.delete(news: news)
-      isFavorte.value = false
+      if favoriteNews != nil {
+        StorageManager.shared.save(favoriteNews: favoriteNews)
+        isFavorte.value = true
+      } else {
+        guard let news = news else { return }
+        StorageManager.shared.save(news: news)
+        isFavorte.value = true
+      }
     }
   }
 
   //MARK: - Private Methods
-  private func loadFavoriteNews() {
+
+  private func setStatus() -> Bool {
+    var liked = false
+
+    if favoriteNews != nil {
+      liked.toggle()
+    } else {
+      loadListOfFavoriteNews()
+      guard let newsId = news?.articleId else { return liked }
+      _ = listOfFavoriteNews.map { favoriteNews in
+        print("neew \(newsId)")
+        print("neewFavotiteeee \(favoriteNews.articleId)")
+        if newsId == favoriteNews.articleId {
+          liked.toggle()
+        }
+      }
+    }
+    return liked
+  }
+
+  private func loadListOfFavoriteNews() {
     StorageManager.shared.fetchFavoriteNews { [weak self] result in
       switch result {
       case .success(let favoriteNews):
-        self?.favoriteListOfNews = favoriteNews
+        self?.listOfFavoriteNews = favoriteNews
       case .failure(let error):
         print(error.localizedDescription)
       }
     }
   }
-
-//  private func loadNews() {
-//        NetworkManager.shared.fetchData(
-//            from: Link.pexelsPhotoById.rawValue,
-//            usingId: Int(favoritePhoto?.id ?? 0),
-//            completion: { [weak self] result in
-//                switch result {
-//                case .success(let photo):
-//                    self?.photo = photo
-//                case .failure(let error):
-//                    print(error.localizedDescription)
-//                }
-//            }
-//        )
-//    }
-
-    private func setStatus() -> Bool {
-        var liked = false
-      loadFavoriteNews()
-
-        if favoriteNews != nil {
-//            loadPhoto()
-            liked.toggle()
-        } else {
-          guard let newsId = news?.articleId else { return liked }
-            _ = favoriteListOfNews.map { favoriteNews in
-              if newsId == news?.articleId {
-                    liked.toggle()
-                }
-            }
-        }
-        return liked
-    }
 }
