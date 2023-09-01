@@ -8,8 +8,8 @@
 import Foundation
 
 protocol TabBarViewModelProtocol {
-    func newsListViewModel() -> NewsListViewModelProtocol
-    func favoriteNewsViewModel() -> FavoriteNewsViewModelProtocol
+  func newsListViewModel() -> NewsListViewModelProtocol
+  func favoriteNewsViewModel() -> FavoriteNewsViewModelProtocol
 }
 
 class TabBarViewModel: TabBarViewModelProtocol {

@@ -28,23 +28,26 @@ class TabBarViewController: UITabBarController {
   )
 
   //MARK: - Life Cycles Methods
+
   override func viewDidLoad() {
     super.viewDidLoad()
     viewModel = TabBarViewModel()
     setupTabBar()
   }
-
+  
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     setupNavigationBar()
   }
 
   //MARK: - TabBar Setup
+
   override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
     navigationItem.title = item.title
   }
 
   //MARK: - Private Methods
+
   private func setupTabBar() {
     addTabBarItem(for: newsVC, title: "News", image: "newspaper", tag: 1)
     addTabBarItem(for: favoriteNewsVC, title: "Favorite News", image: "heart", tag: 2)

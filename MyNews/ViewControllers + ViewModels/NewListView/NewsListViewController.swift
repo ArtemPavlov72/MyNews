@@ -8,57 +8,46 @@
 import UIKit
 
 class NewsListViewController: UICollectionViewController {
-
+  
   //MARK: - Public Properties
-
-  var viewModel: NewsListViewModelProtocol?
-
+  
+  var viewModel: NewsListViewModelProtocol? {
+    didSet {
+      viewModel?.fetchNewsData() { [weak self] in
+        self?.activityIndicator?.stopAnimating()
+        self?.collectionView.reloadData()
+      }
+    }
+  }
+  
   //MARK: - Private Properties
-
-  private let cellID = "cell"
+  
   private var activityIndicator: UIActivityIndicatorView?
-
+  
+  //MARK: - Life Cycles Methods
+  
   override func viewDidLoad() {
     super.viewDidLoad()
-    collectionView.register(NewsCell.self, forCellWithReuseIdentifier: cellID)
-    loadFirstData()
+    collectionView.register(NewsCell.self, forCellWithReuseIdentifier: NewsCell.reuseId)
+    activityIndicator = showSpinner(in: view)
   }
-
+  
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     collectionView.reloadData()
   }
-
-  //MARK: - Private Methods
-
-  private func loadFirstData() {
-    activityIndicator = showSpinner(in: view)
-    viewModel?.fetchNewsData() { [weak self] in
-      self?.activityIndicator?.stopAnimating()
-      self?.collectionView.reloadData()
-    }
-  }
-
-  private func showSpinner(in view: UIView) -> UIActivityIndicatorView {
-    let activityIndicator = UIActivityIndicatorView(frame: view.bounds)
-    activityIndicator.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-    activityIndicator.startAnimating()
-    activityIndicator.hidesWhenStopped = true
-    view.addSubview(activityIndicator)
-    return activityIndicator
-  }
-
+    
   // MARK: - UICollectionViewDataSource
-
+  
   override func collectionView(_ collectionView: UICollectionView,
                                numberOfItemsInSection section: Int) -> Int {
     viewModel?.numberOfRows() ?? 0
   }
-
+  
   override func collectionView(_ collectionView: UICollectionView,
                                cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     guard let cell = collectionView.dequeueReusableCell(
-      withReuseIdentifier: cellID,
+      withReuseIdentifier: NewsCell.reuseId,
       for: indexPath
     ) as? NewsCell else {
       return NewsCell()
@@ -66,20 +55,21 @@ class NewsListViewController: UICollectionViewController {
     cell.viewModel = viewModel?.cellViewModel(at: indexPath)
     return cell
   }
-
+  
   // MARK: - UICollectionViewDelegate
-
+  
   override func collectionView(_ collectionView: UICollectionView,
                                willDisplay cell: UICollectionViewCell,
                                forItemAt indexPath: IndexPath) {
-    if indexPath.item == (viewModel?.numberOfRows() ?? 0) - 5 {
+    if indexPath.item == (viewModel?.numberOfRows() ?? 0) - 2 {
       viewModel?.fetchNewsData() { [weak self] in
         self?.collectionView.reloadData()
       }
     }
   }
-
-  override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+  
+  override func collectionView(_ collectionView: UICollectionView,
+                               didSelectItemAt indexPath: IndexPath) {
     let detailVC = NewsDetailsViewController()
     detailVC.viewModel = viewModel?.detailsViewModel(at: indexPath) as? NewsDetailsViewModel
     show(detailVC, sender: nil)
@@ -93,13 +83,13 @@ extension NewsListViewController: UICollectionViewDelegateFlowLayout {
                       layout collectionViewLayout: UICollectionViewLayout,
                       sizeForItemAt indexPath: IndexPath) -> CGSize {
     let appearance = Appearance()
-    let paddingWidth = 20 * (appearance.numberOfItemsPerRow + 1)
+    let paddingWidth = appearance.minimumLineSpacing * (appearance.numberOfItemsPerRow + 1)
     let avaibleWidth = collectionView.frame.width - paddingWidth
     let widthPerItem = avaibleWidth / appearance.numberOfItemsPerRow
     let heightPerItem = widthPerItem * 0.7
     return CGSize(width: widthPerItem, height: heightPerItem)
   }
-
+  
   func collectionView(_ collectionView: UICollectionView,
                       layout collectionViewLayout: UICollectionViewLayout,
                       insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -109,14 +99,14 @@ extension NewsListViewController: UICollectionViewDelegateFlowLayout {
                         bottom: appearance.bottonInsert,
                         right: appearance.rightInsert)
   }
-
+  
   func collectionView(_ collectionView: UICollectionView,
                       layout collectionViewLayout: UICollectionViewLayout,
                       minimumLineSpacingForSectionAt section: Int) -> CGFloat {
     let appearance = Appearance()
     return appearance.minimumLineSpacing
   }
-
+  
   func collectionView(_ collectionView: UICollectionView,
                       layout collectionViewLayout: UICollectionViewLayout,
                       minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {

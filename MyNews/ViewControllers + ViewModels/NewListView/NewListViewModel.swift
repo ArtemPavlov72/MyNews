@@ -9,9 +9,9 @@ import Foundation
 
 protocol NewsListViewModelProtocol {
   func numberOfRows() -> Int
-  func fetchNewsData(_ completion: @escaping() -> Void)
   func cellViewModel(at indexPath: IndexPath) -> NewsCellViewModelProtocol
   func detailsViewModel(at indexPath: IndexPath) -> NewsDetailsViewModelProtocol
+  func fetchNewsData(_ completion: @escaping() -> Void)
 }
 
 class NewsListViewModel: NewsListViewModelProtocol {
@@ -23,6 +23,10 @@ class NewsListViewModel: NewsListViewModelProtocol {
 
   //MARK: - Public Methods
 
+  func numberOfRows() -> Int {
+    listOfNews.count
+  }
+
   func cellViewModel(at indexPath: IndexPath) -> NewsCellViewModelProtocol {
     NewsCellViewModel(news: getNews(at: indexPath), favoriteNews: nil)
   }
@@ -31,12 +35,7 @@ class NewsListViewModel: NewsListViewModelProtocol {
     NewsDetailsViewModel(news: getNews(at: indexPath), favoriteNews: nil)
   }
 
-  func numberOfRows() -> Int {
-    listOfNews.count
-  }
-
   func fetchNewsData(_ completion: @escaping () -> Void) {
-
     let link = newsData == nil
     ? "\(Link.baseURL.rawValue)\(ApiKey.pexelsKey.rawValue)\(Link.languageEn.rawValue)"
     : "\(Link.baseURL.rawValue)\(ApiKey.pexelsKey.rawValue)\(Link.languageEn.rawValue)\(Link.page.rawValue)\(newsData?.nextPage ?? 0)"

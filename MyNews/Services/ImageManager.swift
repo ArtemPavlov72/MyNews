@@ -9,19 +9,19 @@ import Foundation
 
 class ImageManager {
 
-    static let shared = ImageManager()
+  static let shared = ImageManager()
 
-    private init() {}
+  private init() {}
 
-    func loadImageWithCache(from url: URL, completion: @escaping(Data, URLResponse) -> Void) {
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            guard let data = data, let response = response else {
-                return
-            }
-            guard url == response.url else {return}
-            DispatchQueue.main.async {
-                completion(data, response)
-            }
-        }.resume()
-    }
+  func loadImageWithCache(from url: URL, completion: @escaping(Data, URLResponse) -> Void) {
+    URLSession.shared.dataTask(with: url) { data, response, error in
+      guard let data = data, let response = response else {
+        return
+      }
+      guard url == response.url else {return}
+      DispatchQueue.main.async {
+        completion(data, response)
+      }
+    }.resume()
+  }
 }

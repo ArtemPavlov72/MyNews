@@ -8,6 +8,7 @@
 import CoreData
 
 class StorageManager {
+
   static let shared = StorageManager()
 
   // MARK: - Core Data stack
@@ -61,6 +62,7 @@ class StorageManager {
 
   func delete(news: News.ResultOfNews) {
     var favoriteNews: [FavoriteNews] = []
+
     fetchFavoriteNews { result in
       switch result {
       case .success(let news):
@@ -69,10 +71,12 @@ class StorageManager {
         print(error.localizedDescription)
       }
     }
+
     guard let newsId = news.articleId else { return }
     _ = favoriteNews.map { favoriteNews in
       guard newsId == favoriteNews.articleId else { return }
       delete(favoriteNews: favoriteNews)
+      return
     }
   }
 

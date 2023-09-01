@@ -8,48 +8,36 @@
 import UIKit
 
 class FavoriteNewsViewController: UICollectionViewController {
-
+  
   //MARK: - Public Properties
-
+  
   var viewModel: FavoriteNewsViewModelProtocol?
-
+  
   //MARK: - Private Properties
-
-  private let cellID = "cell"
+  
   private var activityIndicator: UIActivityIndicatorView?
-
+  
   override func viewDidLoad() {
     super.viewDidLoad()
-    collectionView.register(NewsCell.self, forCellWithReuseIdentifier: cellID)
+    collectionView.register(NewsCell.self, forCellWithReuseIdentifier: NewsCell.reuseId)
   }
-
+  
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     collectionView.reloadData()
   }
-
-  //MARK: - Private Methods
-
-  private func showSpinner(in view: UIView) -> UIActivityIndicatorView {
-    let activityIndicator = UIActivityIndicatorView(frame: view.bounds)
-    activityIndicator.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-    activityIndicator.startAnimating()
-    activityIndicator.hidesWhenStopped = true
-    view.addSubview(activityIndicator)
-    return activityIndicator
-  }
-
+  
   // MARK: - UICollectionViewDataSource
-
+  
   override func collectionView(_ collectionView: UICollectionView,
                                numberOfItemsInSection section: Int) -> Int {
     viewModel?.numberOfRows() ?? 0
   }
-
+  
   override func collectionView(_ collectionView: UICollectionView,
                                cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     guard let cell = collectionView.dequeueReusableCell(
-      withReuseIdentifier: cellID,
+      withReuseIdentifier: NewsCell.reuseId,
       for: indexPath
     ) as? NewsCell else {
       return NewsCell()
@@ -57,9 +45,9 @@ class FavoriteNewsViewController: UICollectionViewController {
     cell.viewModel = viewModel?.cellViewModel(at: indexPath)
     return cell
   }
-
+  
   // MARK: - UICollectionViewDelegate
-
+  
   override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     let detailVC = NewsDetailsViewController()
     detailVC.viewModel = viewModel?.detailsViewModel(at: indexPath) as? NewsDetailsViewModel
@@ -70,17 +58,18 @@ class FavoriteNewsViewController: UICollectionViewController {
 // MARK: - UICollectionViewDelegateFlowLayout
 
 extension FavoriteNewsViewController: UICollectionViewDelegateFlowLayout {
+
   func collectionView(_ collectionView: UICollectionView,
                       layout collectionViewLayout: UICollectionViewLayout,
                       sizeForItemAt indexPath: IndexPath) -> CGSize {
     let appearance = Appearance()
-    let paddingWidth = 20 * (appearance.numberOfItemsPerRow + 1)
+    let paddingWidth = appearance.leftInsert * (appearance.numberOfItemsPerRow + 1)
     let avaibleWidth = collectionView.frame.width - paddingWidth
     let widthPerItem = avaibleWidth / appearance.numberOfItemsPerRow
     let heightPerItem = widthPerItem * 0.7
     return CGSize(width: widthPerItem, height: heightPerItem)
   }
-
+  
   func collectionView(_ collectionView: UICollectionView,
                       layout collectionViewLayout: UICollectionViewLayout,
                       insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -90,14 +79,14 @@ extension FavoriteNewsViewController: UICollectionViewDelegateFlowLayout {
                         bottom: appearance.bottonInsert,
                         right: appearance.rightInsert)
   }
-
+  
   func collectionView(_ collectionView: UICollectionView,
                       layout collectionViewLayout: UICollectionViewLayout,
                       minimumLineSpacingForSectionAt section: Int) -> CGFloat {
     let appearance = Appearance()
     return appearance.minimumLineSpacing
   }
-
+  
   func collectionView(_ collectionView: UICollectionView,
                       layout collectionViewLayout: UICollectionViewLayout,
                       minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {

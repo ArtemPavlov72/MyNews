@@ -17,18 +17,22 @@ class NewsDetailsViewController: UIViewController {
 
   private lazy var titleLabel: UILabel = {
     let label = UILabel()
-    label.font = UIFontMetrics.default.scaledFont(for: UIFont.systemFont(ofSize: 24, weight: .bold))
-    label.numberOfLines = 0
+    label.numberOfLines = 5
     label.textColor = UIColor(named: "DetailDescriptionColor")
+    label.font = UIFontMetrics.default.scaledFont(
+      for: UIFont.systemFont(ofSize: 24, weight: .bold)
+    )
     return label
   }()
 
   private lazy var authorLabel: UILabel = {
     let label = UILabel()
-    label.font = UIFontMetrics.default.scaledFont(for: UIFont.systemFont(ofSize: 18, weight: .medium))
     label.numberOfLines = 0
     label.backgroundColor = .systemYellow.withAlphaComponent(0.1)
     label.textColor = UIColor(named: "DetailDescriptionColor")?.withAlphaComponent(0.7)
+    label.font = UIFontMetrics.default.scaledFont(
+      for: UIFont.systemFont(ofSize: 18, weight: .medium)
+    )
     return label
   }()
 
@@ -45,15 +49,20 @@ class NewsDetailsViewController: UIViewController {
     image.contentMode = .scaleAspectFill
     image.tintColor = .gray
     image.layer.masksToBounds = true
-    image.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+    image.layer.maskedCorners = [.layerMaxXMinYCorner,
+                                 .layerMinXMinYCorner]
     return image
   }()
 
   private lazy var imageBackgroundView: UIView = {
     let view = UIView()
-    view.backgroundColor = UIColor(red:0.09804, green:0.10980, blue:0.16471, alpha:1.00000)
     view.layer.cornerRadius = 10
-    view.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+    view.layer.maskedCorners = [.layerMaxXMinYCorner,
+                                .layerMinXMinYCorner]
+    view.backgroundColor = UIColor(red:0.09804,
+                                   green:0.10980,
+                                   blue:0.16471,
+                                   alpha:1.00000)
     return view
   }()
 
@@ -70,8 +79,13 @@ class NewsDetailsViewController: UIViewController {
     button.setTitle("Share link", for: .normal)
     button.setTitleColor(.white, for: .normal)
     button.setTitleColor(.gray, for: .highlighted)
-    button.backgroundColor = UIColor(red:0.14902, green:0.16471, blue:0.21961, alpha:1.00000)
-    button.addTarget(self, action: #selector(shareData), for: .touchUpInside)
+    button.backgroundColor = UIColor(red:0.14902,
+                                     green:0.16471,
+                                     blue:0.21961,
+                                     alpha:1.00000)
+    button.addTarget(self,
+                     action: #selector(shareData),
+                     for: .touchUpInside)
     return button
   }()
 
@@ -81,8 +95,13 @@ class NewsDetailsViewController: UIViewController {
     button.layer.maskedCorners = [.layerMaxXMaxYCorner]
     button.setImage(UIImage(systemName: "heart"), for: .normal)
     button.tintColor = .white
-    button.backgroundColor = UIColor(red:0.14902, green:0.16471, blue:0.21961, alpha:1.00000)
-    button.addTarget(self, action: #selector(addToFavorite), for: .touchUpInside)
+    button.backgroundColor = UIColor(red:0.14902,
+                                     green:0.16471,
+                                     blue:0.21961,
+                                     alpha:1.00000)
+    button.addTarget(self,
+                     action: #selector(addToFavorite),
+                     for: .touchUpInside)
     return button
   }()
 
@@ -105,8 +124,17 @@ class NewsDetailsViewController: UIViewController {
     setupNavigationBar()
     installLike(viewModel?.isFavorte.value ?? false)
     setupUI()
-    setupElements(imageBackgroundView, newsImage, horizontalStackView, titleLabel, authorLabel, descriptionTextView)
-    setupSubViews(imageBackgroundView, newsImage, horizontalStackView, titleLabel, authorLabel, descriptionTextView)
+    setupElements(imageBackgroundView,
+                  newsImage,
+                  horizontalStackView,
+                  titleLabel,
+                  authorLabel,
+                  descriptionTextView)
+    setupSubViews(imageBackgroundView,
+                  newsImage,
+                  horizontalStackView,
+                  titleLabel, authorLabel,
+                  descriptionTextView)
     setupConstraints()
   }
 
@@ -163,14 +191,22 @@ class NewsDetailsViewController: UIViewController {
     subViews.forEach { view.addSubview($0) }
   }
 
+  private func setupElements(_ subViews: UIView...) {
+    subViews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+  }
+
   //MARK: - Setup Constraints
 
   private func setupConstraints() {
-    NSLayoutConstraint.activate([
+    let appearance = Appearance()
 
-      imageBackgroundView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
-      imageBackgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
-      imageBackgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
+    NSLayoutConstraint.activate([
+      imageBackgroundView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,
+                                               constant: appearance.topInsert),
+      imageBackgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+                                                   constant: appearance.minLeftInsert),
+      imageBackgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor,
+                                                    constant: appearance.minRightInsert),
       imageBackgroundView.heightAnchor.constraint(equalToConstant: view.layer.frame.height * 0.3),
       
       newsImage.topAnchor.constraint(equalTo: imageBackgroundView.topAnchor),
@@ -178,30 +214,66 @@ class NewsDetailsViewController: UIViewController {
       newsImage.trailingAnchor.constraint(equalTo: imageBackgroundView.trailingAnchor),
       newsImage.heightAnchor.constraint(equalToConstant: view.layer.frame.height * 0.3),
 
-      linkButton.heightAnchor.constraint(equalToConstant: 45),
+      linkButton.heightAnchor.constraint(equalToConstant: appearance.buttonLength),
 
-      separatorView.widthAnchor.constraint(equalToConstant: 1),
-      separatorView.heightAnchor.constraint(equalToConstant: 40),
+      separatorView.widthAnchor.constraint(equalToConstant: appearance.separatorWidth),
+      separatorView.heightAnchor.constraint(equalToConstant: appearance.separatorHeight),
 
-      likeButton.heightAnchor.constraint(equalToConstant: 45),
-      likeButton.widthAnchor.constraint(equalToConstant: 45),
+      likeButton.heightAnchor.constraint(equalToConstant: appearance.buttonLength),
+      likeButton.widthAnchor.constraint(equalToConstant: appearance.buttonLength),
 
-      horizontalStackView.topAnchor.constraint(equalTo: newsImage.bottomAnchor, constant: 0),
-      horizontalStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
-      horizontalStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
+      horizontalStackView.topAnchor.constraint(equalTo: newsImage.bottomAnchor),
+      horizontalStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+                                                   constant: appearance.minLeftInsert),
+      horizontalStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor,
+                                                    constant: appearance.minRightInsert),
 
-      titleLabel.topAnchor.constraint(equalTo: horizontalStackView.bottomAnchor, constant: 16),
-      titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-      titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+      titleLabel.topAnchor.constraint(equalTo: horizontalStackView.bottomAnchor,
+                                      constant: appearance.maxTopInsert),
+      titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+                                          constant: appearance.maxLeftInsert),
+      titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor,
+                                           constant: appearance.maxRightInsert),
 
-      authorLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
-      authorLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-      authorLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+      authorLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor,
+                                       constant: appearance.topInsert),
+      authorLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+                                           constant: appearance.maxLeftInsert),
+      authorLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor,
+                                            constant: appearance.maxRightInsert),
 
-      descriptionTextView.topAnchor.constraint(equalTo: authorLabel.bottomAnchor, constant: 16),
-      descriptionTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-      descriptionTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-      descriptionTextView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8)
+      descriptionTextView.topAnchor.constraint(equalTo: authorLabel.bottomAnchor,
+                                               constant: appearance.maxTopInsert),
+      descriptionTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+                                                   constant: appearance.midlLeftInsert),
+      descriptionTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor,
+                                                    constant: appearance.midlRightInsert),
+      descriptionTextView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,
+                                                  constant: appearance.bottomInsert)
     ])
+  }
+}
+
+// MARK: - Appearance
+
+private extension NewsDetailsViewController {
+  struct Appearance {
+    let minLeftInsert: CGFloat = 8
+    let midlLeftInsert: CGFloat = 10
+    let maxLeftInsert: CGFloat = 16
+
+    let minRightInsert: CGFloat = -8
+    let midlRightInsert: CGFloat = -10
+    let maxRightInsert: CGFloat = -16
+
+    let topInsert: CGFloat = 8
+    let maxTopInsert: CGFloat = 16
+
+    let bottomInsert: CGFloat = -8
+
+    let buttonLength: CGFloat = 45
+
+    let separatorWidth: CGFloat = 1
+    let separatorHeight: CGFloat = 45
   }
 }
